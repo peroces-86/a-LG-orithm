@@ -1,0 +1,82 @@
+name: Organize BaekjoonHub Files
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 Push 시 실행
+
+jobs:
+  organize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set GitHub user info
+        run: |
+          git config --local user.name "OH-TAE-Yang"
+          git config --local user.email "tyo1012@naver.com"
+
+      - name: Fetch Git user.name
+        id: fetch_user_name
+        run: |
+          USER_NAME=$(git config --get user.name)
+          echo "USER_NAME=${USER_NAME}" >> $GITHUB_ENV
+
+      - name: Calculate "몇월 몇째주"
+        id: calculate_week
+        run: |
+          # 현재 날짜 가져오기
+          YEAR=$(date '+%Y')      # 현재 연도
+          MONTH=$(date '+%m')     # 현재 월
+          DAY=$(date '+%d')       # 현재 일
+
+          # 해당 월의 1일이 무슨 요일인지 계산 (0=일요일, 1=월요일, ...)
+          FIRST_DAY_OF_MONTH=$(date -d "${YEAR}-${MONTH}-01" '+%u')
+
+          # 현재 날짜의 월 기준 주차 계산
+          WEEK_OF_MONTH=$(( (10#$DAY + FIRST_DAY_OF_MONTH - 2) / 7 + 1 ))
+
+          # 디렉토리 이름 생성
+          DIRECTORY_NAME="${MONTH}월-${WEEK_OF_MONTH}주차"
+          echo "DIRECTORY_NAME=${DIRECTORY_NAME}" >> $GITHUB_ENV
+
+      - name: Create directories and move files
+        run: |
+          # 환경 변수에서 설정된 정보 가져오기
+          USER_NAME=$USER_NAME
+          DIRECTORY_NAME=$DIRECTORY_NAME
+
+          # 디렉토리 경로 설정
+          PROGRAMMERS_DIR="Programmers/${USER_NAME}/${DIRECTORY_NAME}"
+          BAEKJOON_DIR="Beakjoon/${USER_NAME}/${DIRECTORY_NAME}"
+
+          # 디렉토리 생성
+          mkdir -p "$PROGRAMMERS_DIR"
+          mkdir -p "$BAEKJOON_DIR"
+
+          # Programmers 문제 처리
+          for file in uploaded_files/Programmers*; do
+            if [ -f "$file" ]; then
+              # 파일 이름 추출 (문제 이름)
+              problem_name=$(basename "$file" .java | cut -d'_' -f2-)
+              mv "$file" "$PROGRAMMERS_DIR/${problem_name}.java"
+            fi
+          done
+
+          # Baekjoon 문제 처리
+          for file in uploaded_files/Baekjoon*; do
+            if [ -f "$file" ]; then
+              # 파일 이름 추출 (문제 번호 및 이름)
+              problem_number=$(basename "$file" .java | cut -d'_' -f2)
+              problem_name=$(basename "$file" .java | cut -d'_' -f3-)
+              mv "$file" "$BAEKJOON_DIR/${problem_number}-${problem_name}.java"
+            fi
+          done
+
+      - name: Push changes
+        run: |
+          git add .
+          git commit -m "Organized files by ${DIRECTORY_NAME}"
+          git push
