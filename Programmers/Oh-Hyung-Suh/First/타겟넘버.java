@@ -1,3 +1,5 @@
+package First;
+
 public class 타겟넘버 {
     private static int answer = 0;
 

@@ -1,5 +1,6 @@
+package First;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class 모의고사 {
