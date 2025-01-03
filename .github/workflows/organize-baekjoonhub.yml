@@ -10,20 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Set GitHub user info
       - name: Set GitHub user info
         run: |
           git config --local user.name "OH-TAE-Yang"
           git config --local user.email "tyo1012@naver.com"
 
+      # Fetch Git user.name
       - name: Fetch Git user.name
         id: fetch_user_name
         run: |
           USER_NAME=$(git config --get user.name)
           echo "USER_NAME=${USER_NAME}" >> $GITHUB_ENV
 
+      # Calculate "몇월 몇째주"
       - name: Calculate "몇월 몇째주"
         id: calculate_week
         run: |
@@ -42,12 +46,13 @@ jobs:
           DIRECTORY_NAME="${MONTH}월-${WEEK_OF_MONTH}주차"
           echo "DIRECTORY_NAME=${DIRECTORY_NAME}" >> $GITHUB_ENV
 
+      # Create directories and move files
       - name: Create directories and move files
         run: |
           # 환경 변수에서 설정된 정보 가져오기
           USER_NAME=$USER_NAME
           DIRECTORY_NAME=$DIRECTORY_NAME
-
+          
           # 디렉토리 경로 설정
           PROGRAMMERS_DIR="Programmers/${USER_NAME}/${DIRECTORY_NAME}"
           BAEKJOON_DIR="Beakjoon/${USER_NAME}/${DIRECTORY_NAME}"
@@ -57,30 +62,40 @@ jobs:
           mkdir -p "$BAEKJOON_DIR"
 
           # Programmers 문제 처리
-          for file in ./프로그래머스*; do
-            echo "$file"
-            echo "$PROGRAMMERS_DIR/${problem_name}.java"
-            if [ -f "$file" ]; then
-              # 파일 이름 추출 (문제 이름)
-              problem_name=$(basename "$file" .java | cut -d'_' -f2-)
-              mv "$file" "$PROGRAMMERS_DIR/${problem_name}.java"
+          for folder in ./프로그래머스/*/*; do
+            if [ -d "$folder" ]; then
+              # 폴더 이름 추출 (예: 42885. 구명보트)
+              folder_name=$(basename "$folder")
+              if [[ "$folder_name" =~ ^[0-9]+\. ]]; then
+                # 새로운 디렉토리 경로 생성
+                new_directory="$PROGRAMMERS_DIR/${folder_name}"
+
+                # 폴더 이동
+                mv "$folder" "$new_directory"
+                echo "폴더 이동 완료: $folder -> $new_directory"
+              fi
             fi
           done
 
           # Baekjoon 문제 처리
-          for file in ./백준*; do
-            echo "$file"
-            echo "$BAEKJOON_DIR/${problem_number}-${problem_name}.java"
+          for file in ./백준/*; do
             if [ -f "$file" ]; then
               # 파일 이름 추출 (문제 번호 및 이름)
               problem_number=$(basename "$file" .java | cut -d'_' -f2)
               problem_name=$(basename "$file" .java | cut -d'_' -f3-)
-              mv "$file" "$BAEKJOON_DIR/${problem_number}-${problem_name}.java"
+
+              # 새로운 디렉토리 경로 생성
+              new_directory="$BAEKJOON_DIR/${problem_number}-${problem_name}"
+
+              # 파일 이동
+              mv "$file" "$new_directory.java"
+              echo "파일 이동 완료: $file -> $new_directory.java"
             fi
           done
 
+      # Git commit and push
       - name: Push changes
         run: |
           git add .
-          git commit -m "Organized files by ${DIRECTORY_NAME}"
+          git commit -m "Moved and organized files into ${USER_NAME}/${DIRECTORY_NAME}"
           git push
