@@ -57,7 +57,7 @@ jobs:
           mkdir -p "$BAEKJOON_DIR"
 
           # Programmers 문제 처리
-          for file in /프로그래머스*; do
+          for file in ./프로그래머스/*; do
             if [ -f "$file" ]; then
               # 파일 이름 추출 (문제 이름)
               problem_name=$(basename "$file" .java | cut -d'_' -f2-)
