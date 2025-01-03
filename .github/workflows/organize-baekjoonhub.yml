@@ -17,7 +17,7 @@ jobs:
       # Set GitHub user info
       - name: Set GitHub user info
         run: |
-          git config --local user.name "OH-TAE-Yang"
+          git config --local user.name "Oh-Tae-Yang"
           git config --local user.email "tyo1012@naver.com"
 
       # Fetch Git user.name
