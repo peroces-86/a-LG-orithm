@@ -58,6 +58,8 @@ jobs:
 
           # Programmers 문제 처리
           for file in ./프로그래머스/*; do
+            echo "$file"
+            echo "$PROGRAMMERS_DIR/${problem_name}.java"
             if [ -f "$file" ]; then
               # 파일 이름 추출 (문제 이름)
               problem_name=$(basename "$file" .java | cut -d'_' -f2-)
@@ -67,6 +69,8 @@ jobs:
 
           # Baekjoon 문제 처리
           for file in 백준*; do
+            echo "$file"
+            echo "$PROGRAMMERS_DIR/${problem_name}.java"
             if [ -f "$file" ]; then
               # 파일 이름 추출 (문제 번호 및 이름)
               problem_number=$(basename "$file" .java | cut -d'_' -f2)
