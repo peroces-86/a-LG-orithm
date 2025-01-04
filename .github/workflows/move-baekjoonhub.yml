@@ -64,6 +64,7 @@ jobs:
               # 폴더 이름 추출 (예: 42885. 구명보트)
               folder_name=$(basename "$folder")
               if [[ "$folder_name" =~ ^[0-9]+\. ]]; then
+                echo "찾은 폴더: $folder"
                 # 새로운 디렉토리 경로 생성
                 new_directory="$PROGRAMMERS_DIR/${folder_name}"
 
