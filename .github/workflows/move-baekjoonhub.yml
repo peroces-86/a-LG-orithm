@@ -1,26 +1,31 @@
-name: Organize BaekjoonHub Files
+name: Move BaekjoonHub Files #워크 플로우 이름
 
-on:
+on: # 워크플로우가 실행될 이벤트들
   push:
     branches:
       - main  # main 브랜치에 Push 시 실행
 
-jobs:
-  organize:
-    runs-on: ubuntu-latest
+jobs: # 워크플로우에서 실행할 작업들
+  move: # 작업 이름
+    runs-on: ubuntu-latest # 실행 환경(OS)
 
-    steps:
+    steps: # 작업 내에서 실행될 단계들
       # Checkout repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout repository # 단계 이름
+        uses: actions/checkout@v3 # 액션 사용: 리포지토리 체크아웃, 현재 리포지토리 소스 코드를 가져오도록 설정
 
-      # Set GitHub user info
+      # GitHub 사용자 정보 설정
       - name: Set GitHub user info
         run: |
+<<<<<<< HEAD:.github/workflows/move-baekjoonhub.yml
           git config --local user.name "Oh-Hyung-Suh"
           git config --local user.email "ohhyungsuh@gmail.com"
+=======
+          git config --local user.name "Oh-Tae-Yang" # 본인 성명
+          git config --local user.email "tyo1012@naver.com" # 본인 이메일
+>>>>>>> 6fddce218b5b99c9005551ffcf4f181b602468c1:.github/workflows/organize-baekjoonhub.yml
 
-      # Fetch Git user.name
+      # config user.name 환경 변수 설정
       - name: Fetch Git user.name
         id: fetch_user_name
         run: |
@@ -46,7 +51,7 @@ jobs:
           DIRECTORY_NAME="${MONTH}월-${WEEK_OF_MONTH}주차"
           echo "DIRECTORY_NAME=${DIRECTORY_NAME}" >> $GITHUB_ENV
 
-      # Create directories and move files
+      # 디렉토리 생성 및 파일 이동
       - name: Create directories and move files
         run: |
           
@@ -59,12 +64,16 @@ jobs:
           mkdir -p "$BAEKJOON_DIR"
 
           # Programmers 문제 처리
-          for folder in ./프로그래머스/*/*; do
-            if [ -d "$folder" ]; then
+          for folder in ./프로그래머스/*/*; do                # ex)./프로그래머스/레벨1/42885. 구명보트
+            if [ -d "$folder" ]; then                        # folder가 디렉토리인지 확인합니다.
               # 폴더 이름 추출 (예: 42885. 구명보트)
               folder_name=$(basename "$folder")
+<<<<<<< HEAD:.github/workflows/move-baekjoonhub.yml
               if [[ "$folder_name" =~ ^[0-9]+\. ]]; then
                 echo "찾은 폴더: $folder"
+=======
+              if [[ "$folder_name" =~ ^[0-9]+\. ]]; then     # 정규 표현식을 사용해 폴더 이름이 숫자로 시작하고, 뒤에 마침표(.)가 있는지 확인합니다.
+>>>>>>> 6fddce218b5b99c9005551ffcf4f181b602468c1:.github/workflows/organize-baekjoonhub.yml
                 # 새로운 디렉토리 경로 생성
                 new_directory="$PROGRAMMERS_DIR/${folder_name}"
 
@@ -91,9 +100,18 @@ jobs:
             fi
           done
 
-      # Git commit and push
+      # Git 커밋 및 푸시
       - name: Push changes
         run: |
           git add .
+<<<<<<< HEAD:.github/workflows/move-baekjoonhub.yml
           git commit -m "${DIRECTORY_NAME}_${USER_NAME}"
           git push
+=======
+          if git diff-index --quiet HEAD; then # 현재 HEAD와 스테이징된 파일의 차이를 확인합니다.
+            echo "No changes to commit."
+          else
+            git commit -m "${DIRECTORY_NAME}_${USER_NAME}"
+            git push
+          fi
+>>>>>>> 6fddce218b5b99c9005551ffcf4f181b602468c1:.github/workflows/organize-baekjoonhub.yml
