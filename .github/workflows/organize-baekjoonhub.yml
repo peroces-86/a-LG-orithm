@@ -17,8 +17,8 @@ jobs:
       # Set GitHub user info
       - name: Set GitHub user info
         run: |
-          git config --local user.name "Oh-Tae-Yang"
-          git config --local user.email "tyo1012@naver.com"
+          git config --local user.name "Oh-Hyung-Suh"
+          git config --local user.email "ohhyungsuh@gmail.com"
 
       # Fetch Git user.name
       - name: Fetch Git user.name
@@ -49,9 +49,6 @@ jobs:
       # Create directories and move files
       - name: Create directories and move files
         run: |
-          # 환경 변수에서 설정된 정보 가져오기
-          USER_NAME=$USER_NAME
-          DIRECTORY_NAME=$DIRECTORY_NAME
           
           # 디렉토리 경로 설정
           PROGRAMMERS_DIR="Programmers/${USER_NAME}/${DIRECTORY_NAME}"
@@ -97,5 +94,5 @@ jobs:
       - name: Push changes
         run: |
           git add .
-          git commit -m "Moved and organized files into ${USER_NAME}/${DIRECTORY_NAME}"
+          git commit -m "${DIRECTORY_NAME}_${USER_NAME}"
           git push
