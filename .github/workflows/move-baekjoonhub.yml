@@ -52,6 +52,9 @@ jobs: # 워크플로우에서 실행할 작업들
                 # 폴더 이동
                 mv "$folder" "$new_directory"
                 echo "폴더 이동 완료: $folder -> $new_directory"
+          
+                #문제 이름 
+                echo "LATEST_FOLDER_NAME=${folder_name}" >> $GITHUB_ENV
               fi
             fi
           done
@@ -79,6 +82,6 @@ jobs: # 워크플로우에서 실행할 작업들
           if git diff-index --quiet HEAD; then # 현재 HEAD와 스테이징된 파일의 차이를 확인합니다.
             echo "No changes to commit."
           else
-            git commit -m "${DIRECTORY_NAME}_${USER_NAME}"
+            git commit -m "COMMITTED BY ${USER_NAME}: Processed ${LATEST_FOLDER_NAME}"
             git push
           fi
