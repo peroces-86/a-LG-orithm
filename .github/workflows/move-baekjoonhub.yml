@@ -32,8 +32,8 @@ jobs: # 워크플로우에서 실행할 작업들
         run: |
           
           # 디렉토리 경로 설정
-          PROGRAMMERS_DIR="Programmers/${USER_NAME}
-          BAEKJOON_DIR="Beakjoon/${USER_NAME}
+          PROGRAMMERS_DIR="Programmers/${USER_NAME}"
+          BAEKJOON_DIR="Beakjoon/${USER_NAME}"
 
           # 디렉토리 생성
           mkdir -p "$PROGRAMMERS_DIR"
