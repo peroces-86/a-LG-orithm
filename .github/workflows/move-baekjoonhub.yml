@@ -17,8 +17,8 @@ jobs: # 워크플로우에서 실행할 작업들
       # GitHub 사용자 정보 설정
       - name: Set GitHub user info
         run: |
-          git config --local user.name "Oh-Tae-Yang" # 본인 성명
-          git config --local user.email "tyo1012@naver.com" # 본인 이메일
+          git config --local user.name "Oh-Hyung-Suh" # 본인 성명
+          git config --local user.email "ohhyungsuh@gmail.com" # 본인 이메일
 
       # config user.name 환경 변수 설정
       - name: Fetch Git user.name
