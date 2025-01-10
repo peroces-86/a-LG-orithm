@@ -15,10 +15,9 @@ jobs: # 워크플로우에서 실행할 작업들
         uses: actions/checkout@v3 # 액션 사용: 리포지토리 체크아웃, 현재 리포지토리 소스 코드를 가져오도록 설정
 
       # GitHub 사용자 정보 설정
-      # - name: Set GitHub user info
-      #  run: |
-      #    git config --local user.name "Oh-Tae-Yang" # 본인 성명
-      #    git config --local user.email "tyo1012@naver.com" # 본인 이메일
+      - name: Set GitHub user info
+        run: |
+          git config --local user.name "${{ secrets.USER_NAME }}" # 본인 성명
 
       # config user.name 환경 변수 설정
       - name: Fetch Git user.name
