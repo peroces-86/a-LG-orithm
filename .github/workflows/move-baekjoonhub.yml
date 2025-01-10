@@ -34,17 +34,6 @@ jobs: # 워크플로우에서 실행할 작업들
           # 디렉토리 경로 설정
           PROGRAMMERS_DIR="Programmers/${USER_NAME}"
           BAEKJOON_DIR="Beakjoon/${USER_NAME}"
-          
-          # 기존 디렉토리가 존재하면 삭제
-          if [ -d "$PROGRAMMERS_DIR" ]; then
-            rm -rf "$PROGRAMMERS_DIR"
-            echo "기존 디렉토리 삭제: $PROGRAMMERS_DIR"
-          fi
-          
-          if [ -d "$BAEKJOON_DIR" ]; then
-            rm -rf "$BAEKJOON_DIR"
-            echo "기존 디렉토리 삭제: $BAEKJOON_DIR"
-          fi
 
           # 디렉토리 생성
           mkdir -p "$PROGRAMMERS_DIR"
@@ -59,7 +48,13 @@ jobs: # 워크플로우에서 실행할 작업들
               if [[ "$folder_name" =~ ^[0-9]+\. ]]; then     # 정규 표현식을 사용해 폴더 이름이 숫자로 시작하고, 뒤에 마침표(.)가 있는지 확인합니다.
                 # 새로운 디렉토리 경로 생성
                 new_directory="$PROGRAMMERS_DIR/${folder_name}"
-
+                
+                # 기존 디렉토리가 존재하면 삭제
+                if [ -d "new_directory" ]; then
+                  rm -rf "new_directory"
+                  echo "기존 디렉토리 삭제: new_directory"
+                fi
+          
                 # 폴더 이동
                 mv "$folder" "$new_directory"
                 echo "폴더 이동 완료: $folder -> $new_directory"
@@ -80,6 +75,12 @@ jobs: # 워크플로우에서 실행할 작업들
               # 새로운 디렉토리 경로 생성
               new_directory="$BAEKJOON_DIR/${problem_number}-${problem_name}"
 
+              # 기존 디렉토리가 존재하면 삭제
+              if [ -d "new_directory" ]; then
+                rm -rf "new_directory"
+                echo "기존 디렉토리 삭제: new_directory"
+              fi
+          
               # 파일 이동
               mv "$file" "$new_directory.java"
               echo "파일 이동 완료: $file -> $new_directory.java"
