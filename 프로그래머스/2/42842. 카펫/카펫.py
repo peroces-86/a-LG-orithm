@@ -1,3 +1,4 @@
+# 약수 구하기
 def getMyDivisor(n):
 
     divisorsList = []
