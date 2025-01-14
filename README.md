@@ -29,4 +29,4 @@ B: 심수연, 오형서, 유승희, 유영서, 이상훈
 | 1회차 | 42748. K번째수      | 42840. 모의고사 | 43165. 타겟 넘버      |             |               |
 | 2회차 | 12906. 같은 숫자는 싫어 | 42885. 구명보트 | 42576. 완주하지 못한 선수 |             |               |
 | 3회차 | 42840. 조이스틱      | 42842. 카펫   | 42626. 더 맵게       | 42586. 기능개발 | 42746. 가장 큰 수 |
-| 4회차 | [42862. 체육복](https://school.programmers.co.kr/learn/courses/30/lessons/42862)      |   |       |  | |
+| 4회차 | [42862. 체육복](https://school.programmers.co.kr/learn/courses/30/lessons/42862)      |  [42578. 의상](https://school.programmers.co.kr/learn/courses/30/lessons/42578) |       |  | |
