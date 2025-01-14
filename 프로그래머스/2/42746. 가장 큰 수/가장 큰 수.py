@@ -6,6 +6,7 @@ def solution(numbers):
     # nums = list(permutations(numbers, len(numbers)))
     # num_list = list(''.join(map(str,n))  for n in nums)
 
+    
     # 두번째 풀이 : (블로그 참고)
     # [3,30,34] 처럼 숫자의 길이가 달라 정렬 시키면 [34,30,3] -> 34303 으로 나와서 땡
     # 각 숫자마다 3번씩 반복 시킴 [343434,303030,333] 여기서 앞 세자리로 비교하는 것으로 구현
@@ -20,5 +21,4 @@ def solution(numbers):
     for i in numbers:             # 정렬된 리스트를 answer에 순서대로 더해줌
         answer += i
 
-    
     return str(int(answer))
