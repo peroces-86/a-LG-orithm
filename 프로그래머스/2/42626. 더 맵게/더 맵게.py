@@ -3,7 +3,7 @@ import heapq
 def solution(scoville, K):
     answer = 0
     
-    # 최소 힙
+    # 최소 힙 (최소로 정렬)
     heapq.heapify(scoville)
     
     # 모든 음식을 다 섞을때까지 반복
