@@ -1,5 +1,6 @@
 # a-LG-orithm
 ![image](https://github.com/user-attachments/assets/3a094f1d-7b8a-497d-8b80-8a5884e00e6f)
+
 LG CNS AM Inspire Camp 알고리즘 스터디
 
 ### 스터디 내 팀 구성
