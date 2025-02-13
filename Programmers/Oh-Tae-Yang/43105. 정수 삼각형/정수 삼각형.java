@@ -1,20 +1,27 @@
 class Solution {
-    /*
-    1. Bottom-up 상향식 접근이 맞다고 생각! 중복 호출로 시간 초과가 발생하는 것을 확인
-     */
     static int [][] dp;
+    static boolean [][] vistied;
     public static int solution(int[][] triangle) {
+        int answer = 0;
         int len = triangle.length;
         dp = new int[len][len];
-
+        vistied = new boolean[len][len];
         for (int i = 0; i < len; i++) {
             dp[len - 1][i] = triangle[len - 1][i];
         }
-        for (int i = len - 2; i >= 0; i--) {
-            for (int j = 0; j <= i; j++) {
-                dp[i][j] = triangle[i][j] + Math.max(dp[i + 1][j], dp[i + 1][j + 1]);
-            }
+
+        return topDown(triangle, 0, 0);
+    }
+    public static int topDown(int[][] triangle, int n, int m) {
+        if (n == triangle.length - 1) {
+            vistied[n][m] = true;
+            return dp[n][m];
         }
-        return dp[0][0];
+        if (vistied[n][m]) {
+            return dp[n][m];
+        }
+        dp[n][m] = triangle[n][m] + Math.max(topDown(triangle, n+1, m), topDown(triangle, n+1, m +1));
+        vistied[n][m] = true;
+        return dp[n][m];
     }
 }
